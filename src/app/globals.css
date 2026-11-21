@@ -1,0 +1,106 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ivory: #faf9f6;
+  --color-paper: #f3efe6;
+  --color-wall: #efe3c4;
+  --color-ink: #1c1917;
+  --color-stone: #645d57;
+  --color-line: #e2dcd1;
+  --color-forest: #1b4332;
+  --color-forest-deep: #133024;
+  --color-forest-soft: #d9e4dc;
+
+  --font-display: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  --font-sans: var(--font-jakarta), "Plus Jakarta Sans", system-ui, sans-serif;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  html {
+    background: var(--color-ivory);
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  ::selection {
+    background: var(--color-forest);
+    color: var(--color-ivory);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-forest);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  input,
+  select,
+  textarea {
+    font: inherit;
+    color: inherit;
+  }
+}
+
+/* Lenis recommended rules */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+/*
+ * Hero entrance: elements start hidden only when JS is running and motion is
+ * allowed. The failsafe animation reveals them if scripts never arrive.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  html.js [data-hero-anim] {
+    opacity: 0;
+    animation: hero-failsafe 0s linear 3.5s forwards;
+  }
+}
+@keyframes hero-failsafe {
+  to {
+    opacity: 1;
+  }
+}
+
+/* FAQ disclosure */
+details > summary {
+  list-style: none;
+  cursor: pointer;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+details .faq-sign::before {
+  content: "+";
+}
+details[open] .faq-sign::before {
+  content: "\2212";
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
